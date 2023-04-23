@@ -11,9 +11,18 @@ document.getElementById('form').addEventListener('submit', function(event) {
         } else if (idAndNames === "Already RSVPd"){
           document.getElementById('output').innerHTML = `<div>Error: Already RSVP'd.</div>`;
         } else {
-            document.getElementById('output').innerHTML = "<div>Name found!</div>";
+          document.getElementById('entireForm').innerHTML = createPage1(idAndNames);
         }
       }
     };
     xhr.send();
   });
+
+function createPage1(idAndNames){
+  return `
+      <div>
+      These are the ID and names on that invitation ID:<br/>
+      ${idAndNames} <br/>
+      </div>
+  `;
+}
