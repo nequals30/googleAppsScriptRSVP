@@ -1,3 +1,4 @@
+
 document.getElementById('form').addEventListener('submit', function(event) {
     event.preventDefault();
     var name = this.elements.name.value;
@@ -11,18 +12,48 @@ document.getElementById('form').addEventListener('submit', function(event) {
         } else if (idAndNames === "Already RSVPd"){
           document.getElementById('output').innerHTML = `<div>Error: Already RSVP'd.</div>`;
         } else {
-          document.getElementById('entireForm').innerHTML = createPage1(idAndNames);
+          collectResponses(idAndNames);
         }
       }
     };
     xhr.send();
   });
 
-function createPage1(idAndNames){
-  return `
+function collectResponses(idAndNames){
+  const data = [];
+  const inputArray = idAndNames.split(',');
+  const inviteID = inputArray.shift() || "NA";
+
+  // Iterate through the remaining names and create an object for each person
+  inputArray.forEach((name, index) => {
+    if (name) {
+      data.push({
+        inviteID: inviteID,
+        name: name,
+        attending: 0,
+        id: `person${index}` // checkbox id, so submit button can find it
+      });
+    }
+  });
+
+  // Write HTML and checkboxes for each person
+  document.getElementById('entireForm').innerHTML = `
       <div>
-      These are the ID and names on that invitation ID:<br/>
-      ${idAndNames} <br/>
+      We found your RSVP!<br/><br/>
+      ${data.map(
+          person => `${person.name}: <input type="checkbox" id="${person.id}" /> Attending?<br/><br/>`
+        ).join('')}
+      <button id="submit">Submit</button>
       </div>
   `;
+
+  // Submit button code
+  document.getElementById('submit').addEventListener('click', () => {
+    // write each person's attending value to "data"
+    data.forEach(person => {
+      person.attending = document.getElementById(person.id).checked ? 1 : 0;
+    });
+
+    console.log(data);
+  });
 }
