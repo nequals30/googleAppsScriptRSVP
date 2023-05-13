@@ -1,6 +1,5 @@
 // This should be pasted into the Apps Script
 
-// validation
 function doGet(e) {
     var inputName = e.parameter.name;
     var sheet = SpreadsheetApp.getActiveSheet();
@@ -47,3 +46,10 @@ function doGet(e) {
   
     return ContentService.createTextOutput(out);
   }
+
+
+// submission
+function doPost(e) {
+ 
+  return ContentService.createTextOutput('Success');
+}

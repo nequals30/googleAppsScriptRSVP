@@ -54,6 +54,35 @@ function collectResponses(idAndNames){
       person.attending = document.getElementById(person.id).checked ? 1 : 0;
     });
 
-    console.log(data);
+    submitForm(data);
+
+    // Disable the submit button so people can't click on it multiple times
+    document.getElementById('submit').disabled = true;
+  });
+}
+
+function submitForm(data) {
+  const url = 'https://script.google.com/macros/s/YOUR_GOOGLE_APPS_SCRIPT_ID/exec';
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', url);
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.onload = function() {
+    if (xhr.status === 200 && xhr.responseText === 'Success') {
+      console.log("Success!");
+    } else {
+      return; // error
+    }
+  };
+  xhr.onerror = function() {
+    return; // Request failed due to a network error or other issue
+  };
+  xhr.send(serializeData(data));
+}
+
+function serializeData(data) {
+  // helper function to avoid loading a library
+  return data.map(obj => {
+    const params = new URLSearchParams(obj);
+    return params.toString();
   });
 }
