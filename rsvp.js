@@ -76,13 +76,5 @@ function submitForm(data) {
   xhr.onerror = function() {
     return; // Request failed due to a network error or other issue
   };
-  xhr.send(serializeData(data));
-}
-
-function serializeData(data) {
-  // helper function to avoid loading a library
-  return data.map(obj => {
-    const params = new URLSearchParams(obj);
-    return params.toString();
-  });
+  xhr.send(JSON.stringify(data));
 }
