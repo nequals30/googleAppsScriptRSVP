@@ -68,7 +68,7 @@ function submitForm(data) {
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.onload = function() {
     if (xhr.status === 200 && xhr.responseText === 'Success') {
-      console.log("Success!");
+      document.getElementById('entireForm').innerHTML = `<div>Success!</div>`;
     } else {
       return; // error
     }
