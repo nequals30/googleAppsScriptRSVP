@@ -3,12 +3,13 @@ Have you ever wanted an RSVP form for an event, but didn't want to use a third-p
 
 This is a fully DIY solution, and there are some advantages to doing it this way:
 
-* __Convenience__ -- Your guest's RSVP responses automatically get saved to a Google Sheet and emailed to you.
-* __Control__ -- Fully integrates into your website and styled by you. You control every detail. 
-* __Simplicity__ -- No "backend" to maintain. Just one Javascript file, without dependencies, that can be hosted anywhere (e.g. Github Pages)
-* __Price__ -- Free to use, don't need to pay for hosting.
-* __Privacy__ -- you're collecting the data yourself.
+* __Convenience__: Your guest's RSVP responses automatically get saved to a Google Sheet and emailed to you.
+* __Control__: Fully integrates into your website and styled by you. You control every detail. 
+* __Simplicity__: No "backend" to maintain. Just one Javascript file, without dependencies, that can be hosted anywhere (e.g. Github Pages)
+* __Price__: Free to use, don't need to pay for hosting.
+* __Privacy__: you're collecting the data yourself.
 
+---
 ### Overview
 ![Summary](/tutorial_images/googleRSVP_summary.jpg)
 
