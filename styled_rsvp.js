@@ -1,16 +1,18 @@
 
 document.getElementById('form').addEventListener('submit', function(event) {
+    document.getElementById('submit').classList.add('is-loading');
     event.preventDefault();
     var name = this.elements.name.value;
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://script.google.com/macros/s/YOUR_GOOGLE_APPS_SCRIPT_ID/exec?name=' + name, true);
     xhr.onreadystatechange = function() {
       if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        document.getElementById('submit').classList.remove('is-loading');
         var idAndNames = xhr.responseText;
         if (idAndNames === "Name not found") {
-          document.getElementById('output').innerHTML = `<div>Couldn't find guest name.</div>`;
+          document.getElementById('output').innerHTML = `<div class="notification is-danger">Couldn't find guest name.</div>`;
         } else if (idAndNames === "Already RSVPd"){
-          document.getElementById('output').innerHTML = `<div>This guest has already submitted an RSVP.</div>`;
+          document.getElementById('output').innerHTML = `<div class="notification is-danger">This guest has already submitted an RSVP.</div>`;
         } else {
           create_rsvpPage1(idAndNames);
         }
@@ -36,19 +38,33 @@ function create_rsvpPage1(idAndNames){
     }
   });
 
-  // Write HTML and checkboxes for each person
   document.getElementById('entireForm').innerHTML = `
-      <div>
-      We found your RSVP!<br/><br/>
-      ${data.map(
-          person => `${person.name}: <input type="checkbox" id="${person.id}" /> Attending?<br/><br/>`
-        ).join('')}
-      <button id="submit">Submit</button>
+  <div class="content">
+      <p>We found your RSVP!</p>
+      ${data.map(person => `
+          <div class="card mb-4">
+              <div class="card-content">
+                  <p class="subtitle">${person.name}</p>
+                  <div class="field">
+                    <label class="checkbox">
+                      <input type="checkbox" id="${person.id}">
+                      <span class="ml-2">Attending?</span>
+                    </label>
+                  </div>
+              </div>
+          </div>
+      `).join('')}
+      <div class="field">
+          <div class="control has-text-centered">
+              <button id="submit" class="button is-link">Submit</button>
+          </div>
       </div>
-  `;
+  </div>
+`;
 
   // Submit button code
   document.getElementById('submit').addEventListener('click', () => {
+    document.getElementById('submit').classList.add('is-loading');
     // write each person's attending value to "data"
     data.forEach(person => {
       person.attending = document.getElementById(person.id).checked ? 1 : 0;
@@ -68,6 +84,7 @@ function submitForm(data) {
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.onload = function() {
     if (xhr.status === 200 && xhr.responseText === 'Success') {
+      document.getElementById('submit').classList.remove('is-loading');
       document.getElementById('entireForm').innerHTML = `<div>Success!</div>`;
     } else {
       return; // error
