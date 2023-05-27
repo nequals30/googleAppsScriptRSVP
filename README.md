@@ -51,3 +51,31 @@ Here you have two choices:
 2) Styled -- Same thing, but with CSS styling using Bulma CSS. Use the files [styled_form.html](./styled_form.html) and [styled_rsvp.js](./styled_rsvp.js) in this repo.
 
 __NOTE:__ In the Javascript function (either _simple_rsvp.js_ or _styled_rsvp.js_), you will need to __change this:__ `YOUR_GOOGLE_APPS_SCRIPT_ID` to the ID you copied in the step above.
+
+At this point, everything is in place and should be ready to be used.
+
+
+---
+## What it Looks Like
+When the guest navigates to the HTML form, they should get something that looks like this:
+
+![Guest Lookup Form](./tutorial_images/googleRSVP_guestLookup.jpg)
+
+When they type in their name and hit continue, it sends a GET request to the Google Apps Script, which will return one of three things:
+* An comma delimited string containing the invite ID and guest names, like: `1,Guest One, Guest Two`
+* A string that says `Name Not Found` in which case the guest will get an error.
+* A string that says `Already RSVPd` in which case the guest will get an error.
+
+They will then proceed to a form that looks like this:
+
+![Collect Responses Example](./tutorial_images/googleRSVP_collectResponses.jpg)
+
+When they fill out their RSVP and hit submit, it will send a POST request to the Apps Script, which will do 3 things:
+
+1. Write the guest's RSVP info to a new row of your spreadsheet.
+2. Send you an email.
+3. Set that guest's RSVP status as "1", meaning the guest has RSVP'd and can't RSVP again.
+
+At this point, your Google sheet should have been updated, and you should have recieved an email:
+
+![Results](./tutorial_images/googleRSVP_results.jpg)
